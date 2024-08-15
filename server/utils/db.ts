@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
-import * as schema from "~~/db/schema";
+import * as schema from "~~/drizzle/schema";
 
 const client = createClient({ url: "http://127.0.0.1:8080" });
 
