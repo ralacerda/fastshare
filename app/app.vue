@@ -1,10 +1,10 @@
 <script setup>
-const { loggedIn, user, session, fetch, clear } = useUserSession();
+const { loggedIn, user } = useUserSession();
 </script>
 
 <template>
   <div v-if="loggedIn">
-    <h1>Welcome {{ user }}!</h1>
+    <h1>Welcome {{ user.fullName }}!</h1>
     <button @click="clear">Logout</button>
   </div>
   <div v-else>
