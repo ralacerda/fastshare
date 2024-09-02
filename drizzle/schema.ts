@@ -16,3 +16,21 @@ export const users = sqliteTable(
     subIdx: index("sub_idx").on(t.sub),
   })
 );
+
+export const link = sqliteTable(
+  "link",
+  {
+    id: integer("id").primaryKey(),
+    url: text("url").notNull(),
+    code: text("code").notNull().unique(),
+    createAt: integer("created_at", { mode: "timestamp" }).default(
+      sql`CURRENT_TIMESTAMP`
+    ),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
+  },
+  (t) => ({
+    codeIdx: index("code_idx").on(t.code),
+  })
+);
