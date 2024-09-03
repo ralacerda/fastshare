@@ -93,6 +93,10 @@ async function submit() {
       <div>
         Made by <a href="https>//github.com/ralacerda">Renato Lacerda</a>
       </div>
+      <div>
+        Favicon Rabbit Emoji designed by
+        <a href="https://openmoji.org/">OpenMoji</a>
+      </div>
     </footer>
   </main>
 </template>
