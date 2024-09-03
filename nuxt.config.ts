@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      hostURL: "https://link-share-ralacerda.netlify.app",
+      hostURL: "http://localhost:3000",
     },
     tursoUrl: "",
     tursoToken: "",
