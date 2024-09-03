@@ -8,11 +8,27 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    public: {
+      hostURL: "http://localhost:3000",
+    },
+    tursoUrl: "",
+    tursoToken: "",
     oauth: {
       google: {
         clientId: "",
         clientSecret: "",
       },
+    },
+  },
+
+  app: {
+    head: {
+      link: [
+        {
+          href: "https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css",
+          rel: "stylesheet",
+        },
+      ],
     },
   },
 

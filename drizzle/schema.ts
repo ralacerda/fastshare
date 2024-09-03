@@ -17,7 +17,7 @@ export const users = sqliteTable(
   })
 );
 
-export const link = sqliteTable(
+export const links = sqliteTable(
   "link",
   {
     id: integer("id").primaryKey(),

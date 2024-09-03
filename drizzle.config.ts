@@ -4,7 +4,9 @@ export default defineConfig({
   schema: "./drizzle/schema.ts",
   out: "./drizzle/migrations",
   dialect: "sqlite",
+  verbose: true,
   dbCredentials: {
-    url: "http://127.0.0.1:8080",
+    url: process.env.NUXT_TURSO_URL!,
+    authToken: process.env.NUXT_TURSO_TOKEN!,
   },
 });
