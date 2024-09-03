@@ -21,6 +21,7 @@ const error = ref("");
 const { copy } = useClipboard();
 
 function validateUrl() {
+  if (!url.value) return;
   const err = v.safeParse(UrlSchema, url.value);
   validUrl.value = err.success;
   return err.success;
