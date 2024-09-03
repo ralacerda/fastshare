@@ -17,6 +17,7 @@ const shortenLink = computed(() => {
 });
 
 const error = ref("");
+const loading = ref(false);
 
 const { copy } = useClipboard();
 
@@ -29,7 +30,10 @@ function validateUrl() {
 
 async function submit() {
   if (!validateUrl()) return;
+
+  loading.value = true;
   error.value = "";
+
   const { shortID } = await $fetch("/api/createLink", {
     method: "POST",
     body: {
@@ -43,6 +47,7 @@ async function submit() {
     },
   });
 
+  loading.value = false;
   shortenID.value = shortID;
 }
 </script>
@@ -64,7 +69,13 @@ async function submit() {
               @blur="validateUrl"
               v-model="url"
             />
-            <button type="submit" class="button is-link">Shorten</button>
+            <button
+              type="submit"
+              class="button is-link"
+              :class="{ 'is-loading': loading }"
+            >
+              Shorten
+            </button>
           </div>
           <small v-if="!validUrl" class="has-text-danger">Invalid url</small>
         </form>
