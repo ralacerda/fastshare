@@ -89,6 +89,11 @@ async function submit() {
         </div>
       </div>
     </div>
+    <footer>
+      <div>
+        Made by <a href="https>//github.com/ralacerda">Renato Lacerda</a>
+      </div>
+    </footer>
   </main>
 </template>
 
@@ -137,5 +142,11 @@ small {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+footer {
+  align-self: end;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 </style>
