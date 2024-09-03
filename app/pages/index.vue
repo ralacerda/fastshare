@@ -91,7 +91,7 @@ async function submit() {
     </div>
     <footer>
       <div>
-        Made by <a href="https>//github.com/ralacerda">Renato Lacerda</a>
+        Made by <a href="https://github.com/ralacerda">Renato Lacerda</a>
       </div>
       <div>
         Favicon Rabbit Emoji designed by
