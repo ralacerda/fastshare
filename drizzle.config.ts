@@ -5,6 +5,7 @@ export default defineConfig({
   out: "./drizzle/migrations",
   dialect: "sqlite",
   verbose: true,
+  driver: "turso",
   dbCredentials: {
     url: process.env.NUXT_TURSO_URL!,
     authToken: process.env.NUXT_TURSO_TOKEN!,
