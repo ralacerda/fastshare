@@ -105,6 +105,7 @@ main {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
   min-height: 100vh;
+  padding-inline: 2rem;
 }
 
 .content {
@@ -121,6 +122,7 @@ h1 {
   text-align: center;
   margin-top: 1.5rem;
   margin-bottom: 3rem;
+  line-height: 1.1;
 }
 
 label {
@@ -132,6 +134,12 @@ label {
 .input-field {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
+
+  input {
+    flex-grow: 1;
+    flex-basis: 360px;
+  }
 }
 
 small {
