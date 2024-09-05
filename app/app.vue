@@ -3,7 +3,5 @@ import "~/index.css";
 </script>
 
 <template>
-  <div>
-    <NuxtPage />
-  </div>
+  <NuxtPage />
 </template>
