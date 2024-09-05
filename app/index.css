@@ -36,6 +36,8 @@ a {
 }
 
 button.button {
+  --loading: 0;
+
   background-color: var(--primary);
   color: var(--foreground);
   padding: 0.5rem 1rem;
@@ -43,7 +45,7 @@ button.button {
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
   position: relative;
 
   &:disabled {
@@ -53,22 +55,26 @@ button.button {
   &[data-loading] {
     cursor: progress;
     color: transparent;
+    transition: background-color 0.2s, color 0.2s 0.2s;
+    --loading: 1;
+  }
 
-    &::after {
-      animation: rotate 0.4s linear infinite;
-      border-bottom: 2px solid var(--foreground);
-      border-left: 2px solid var(--foreground);
-      border-radius: 999999px;
-      border-right: 2px solid transparent;
-      border-top: 2px solid transparent;
-      content: "";
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      display: block;
-      height: 1em;
-      width: 1em;
-    }
+  &::after {
+    opacity: var(--loading);
+    animation: rotate 0.4s linear infinite;
+    border-bottom: 2px solid var(--foreground);
+    border-left: 2px solid var(--foreground);
+    border-radius: 999999px;
+    border-right: 2px solid transparent;
+    border-top: 2px solid transparent;
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    display: block;
+    height: 1em;
+    width: 1em;
+    transition: opacity calc(var(--loading) * 0.2s) calc(var(--loading) * 0.2s);
   }
 
   &:hover:not(:disabled) {
