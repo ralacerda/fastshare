@@ -55,37 +55,34 @@ async function submit() {
 <template>
   <main>
     <div class="content">
-      <h1 class="has-text-light">Fast Share</h1>
+      <h1>Fast Share</h1>
       <div>
         <form @submit.prevent="submit">
           <label for="url">Insert your url</label>
           <div class="input-field">
             <input
               type="text"
-              class="input"
-              :class="validUrl ? 'is-link' : 'is-danger'"
-              placeholder="Enter your url"
               id="url"
               @blur="validateUrl"
               v-model="url"
+              :data-invalid="!validUrl ? true : undefined"
             />
             <button
               type="submit"
-              class="button is-link"
-              :class="{ 'is-loading': loading }"
+              class="button"
+              :disabled="loading"
+              :data-loading="loading ? true : undefined"
             >
               Shorten
             </button>
           </div>
-          <small v-if="!validUrl" class="has-text-danger">Invalid url</small>
+          <small v-if="!validUrl" class="error">Invalid url</small>
         </form>
-        <div v-if="error" class="has-text-danger">{{ error }}</div>
+        <div v-if="error" class="error">{{ error }}</div>
         <div class="shorten-link" v-if="shortenLink">
           <div>Link shortened:</div>
           <NuxtLink :to="shortenLink">{{ shortenLink }}</NuxtLink>
-          <button class="button is-link" @click="copy(shortenLink)">
-            Copy
-          </button>
+          <button class="button" @click="copy(shortenLink)">Copy</button>
         </div>
       </div>
     </div>
@@ -104,8 +101,9 @@ async function submit() {
 <style scoped>
 main {
   display: grid;
-  place-items: center;
+  justify-items: center;
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
   min-height: 100vh;
 }
 
@@ -121,6 +119,7 @@ form {
 h1 {
   font-size: 4rem;
   text-align: center;
+  margin-top: 1.5rem;
   margin-bottom: 3rem;
 }
 
@@ -152,5 +151,11 @@ footer {
   align-self: end;
   margin-bottom: 1rem;
   text-align: center;
+  color: var(--foreground-light);
+}
+
+.error {
+  font-size: 14px;
+  color: var(--error-text);
 }
 </style>

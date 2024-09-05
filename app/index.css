@@ -9,7 +9,104 @@
   padding: 0;
 }
 
+:root {
+  --background: rgb(22, 25, 29);
+  --foreground: rgb(241, 243, 245);
+  --foreground-light: #adb5bd;
+
+  --primary-text: rgb(79, 105, 198);
+
+  --primary-light: rgb(66, 99, 235);
+  --primary: rgb(54, 79, 199);
+  --primary-dark: rgb(47, 68, 173);
+  --primary-background: rgb(15, 18, 36);
+
+  --error-text: rgb(255, 168, 168);
+  --error: rgb(240, 62, 62);
+  --error-background: rgb(49, 21, 21);
+}
+
+a {
+  color: var(--primary-text);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button.button {
+  background-color: var(--primary);
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s;
+  position: relative;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &[data-loading] {
+    cursor: progress;
+    color: transparent;
+
+    &::after {
+      animation: rotate 0.4s linear infinite;
+      border-bottom: 2px solid var(--foreground);
+      border-left: 2px solid var(--foreground);
+      border-radius: 999999px;
+      border-right: 2px solid transparent;
+      border-top: 2px solid transparent;
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      display: block;
+      height: 1em;
+      width: 1em;
+    }
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--primary-light);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--primary-dark);
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  background-color: var(--primary-background);
+  color: var(--foreground-light);
+  border: 1px solid var(--primary);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: 2px solid color-mix(in srgb, var(--primary-light) 30%, transparent);
+  }
+
+  &[data-invalid] {
+    border-color: var(--error);
+    background-color: var(--error-background);
+    outline-color: color-mix(in srgb, var(--error) 30%, transparent);
+  }
+}
+
 body {
+  background-color: var(--background);
+  color: var(--foreground);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: system-ui;
@@ -20,4 +117,13 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
