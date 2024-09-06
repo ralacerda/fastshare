@@ -40,11 +40,11 @@ button.button {
 
   background-color: var(--primary);
   color: var(--foreground);
-  padding: 0.5rem 1rem;
+  padding: 0.5em 1em;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: inherit;
   transition: background-color 0.2s, color 0.2s, opacity 0.2s;
   position: relative;
 
