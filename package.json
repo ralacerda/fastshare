@@ -20,6 +20,7 @@
     "nuxt": "^3.13.1",
     "nuxt-auth-utils": "^0.3.3",
     "short-unique-id": "^5.2.0",
+    "url-metadata": "^4.1.1",
     "valibot": "^0.41.0"
   },
   "devDependencies": {

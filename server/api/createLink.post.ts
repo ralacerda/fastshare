@@ -1,4 +1,4 @@
-import ShortUniqueId from "short-unique-id";
+import generateID from "../utils/generateID";
 
 type CreateLinkBody = {
   url: string;
@@ -12,18 +12,18 @@ export default defineEventHandler<
   { body: CreateLinkBody },
   Promise<CreateLinkResponse>
 >(async (event) => {
-  const uid = new ShortUniqueId({
-    dictionary: "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789".split(""),
-  });
-
-  const shortID = uid.fmt("$r3-$r3");
   const { url } = await readBody(event);
+  const shortID = generateID();
+  const { title, description, image } = await getMeta(url);
 
   try {
     await db.insert(schema.links).values({
       url,
       code: shortID,
       userId: 1,
+      title,
+      description,
+      image,
     });
   } catch (e) {
     console.error(e);

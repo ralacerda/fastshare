@@ -26,6 +26,9 @@ export const links = sqliteTable(
     createAt: integer("created_at", { mode: "timestamp" }).default(
       sql`CURRENT_TIMESTAMP`
     ),
+    image: text("image"),
+    title: text("title"),
+    description: text("description"),
     userId: integer("user_id")
       .notNull()
       .references(() => users.id),
