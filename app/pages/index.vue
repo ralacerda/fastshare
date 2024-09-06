@@ -2,7 +2,7 @@
 import * as v from "valibot";
 import { useClipboard } from "@vueuse/core";
 
-const { loggedIn, user } = useUserSession();
+const { user } = useUserSession();
 
 const runtimeConfig = useRuntimeConfig();
 const UrlSchema = v.pipe(v.string(), v.url());

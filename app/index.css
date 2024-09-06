@@ -27,15 +27,19 @@
 }
 
 a {
-  color: var(--primary-text);
   text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
+  &:not(.button) {
+    color: var(--primary-text);
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
-button.button {
+button.button,
+a.button {
   --loading: 0;
 
   background-color: var(--primary);

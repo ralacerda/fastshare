@@ -1,7 +1,18 @@
+<script setup lang="ts">
+const { loggedIn, user, clear } = useUserSession();
+</script>
+
 <template>
   <header>
     <h1>Fast Share</h1>
-    <button class="button login-button">Login</button>
+
+    <a v-if="!loggedIn" class="button small-button" href="/auth/google"
+      >Login</a
+    >
+    <div class="user-area" v-else>
+      <span>{{ user?.fullName }}</span>
+      <button class="button small-button" @click="clear">Logout</button>
+    </div>
   </header>
 </template>
 
@@ -17,7 +28,13 @@ header {
   }
 }
 
-.login-button {
+.small-button {
   font-size: 0.9rem;
+}
+
+.user-area {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 </style>
