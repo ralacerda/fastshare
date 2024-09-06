@@ -2,8 +2,6 @@
 import * as v from "valibot";
 import { useClipboard } from "@vueuse/core";
 
-const { user } = useUserSession();
-
 const runtimeConfig = useRuntimeConfig();
 const UrlSchema = v.pipe(v.string(), v.url());
 
@@ -61,9 +59,6 @@ async function submit() {
       <div>
         <form @submit.prevent="submit">
           <label for="url">Insert your url</label>
-          <div v-if="user">
-            <div>Logged in as {{ user.fullName }}</div>
-          </div>
           <div class="input-field">
             <input
               type="text"
