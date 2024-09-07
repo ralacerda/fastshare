@@ -104,7 +104,7 @@ main {
   justify-items: center;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
-  min-height: 100vh;
+  min-height: 100svh;
   padding-inline: 2rem;
 }
 
