@@ -27,3 +27,8 @@ database
 
 # Local Netlify folder
 .netlify
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
