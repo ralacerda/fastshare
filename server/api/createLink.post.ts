@@ -15,12 +15,13 @@ export default defineEventHandler<
   const { url } = await readBody(event);
   const shortID = generateID();
   const { title, description, image } = await getMeta(url);
+  const { user } = await getUserSession(event);
 
   try {
     await db.insert(schema.links).values({
       url,
       code: shortID,
-      userId: 1,
+      userId: user?.id || 1,
       title,
       description,
       image,
