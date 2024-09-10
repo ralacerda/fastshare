@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 const ParamSchema = v.object({
   user: v.pipe(
@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
   const links = await db
     .select()
     .from(schema.links)
+    .orderBy(desc(schema.links.createAt))
     .where(eq(schema.links.userId, params.user))
     .limit(10);
 
