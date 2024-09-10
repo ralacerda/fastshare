@@ -3,6 +3,8 @@ import * as v from "valibot";
 import { useClipboard } from "@vueuse/core";
 
 const runtimeConfig = useRuntimeConfig();
+const { createLink, error, links } = useLinks();
+
 const UrlSchema = v.pipe(v.string(), v.url());
 
 const url = ref("");
@@ -16,7 +18,6 @@ const shortenLink = computed(() => {
     : "";
 });
 
-const error = ref("");
 const loading = ref(false);
 
 const { copy } = useClipboard();
@@ -32,23 +33,8 @@ async function submit() {
   if (!validateUrl()) return;
 
   loading.value = true;
-  error.value = "";
-
-  const { shortID } = await $fetch("/api/createLink", {
-    method: "POST",
-    body: {
-      url: url.value,
-    },
-    onResponseError: async ({ response }) => {
-      error.value = response._data.message;
-    },
-    onResponse: () => {
-      url.value = "";
-    },
-  });
-
+  await createLink(url.value);
   loading.value = false;
-  shortenID.value = shortID;
 }
 </script>
 
@@ -84,7 +70,7 @@ async function submit() {
           <NuxtLink :to="shortenLink">{{ shortenLink }}</NuxtLink>
           <button class="button" @click="copy(shortenLink)">Copy</button>
         </div>
-        <RecentLinks />
+        <RecentLinks :links />
       </div>
     </div>
     <footer>

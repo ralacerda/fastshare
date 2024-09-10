@@ -1,1 +1,0 @@
-CREATE INDEX `sub_idx` ON `users` (`sub`);

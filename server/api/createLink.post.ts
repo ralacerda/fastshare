@@ -1,11 +1,13 @@
 import generateID from "../utils/generateID";
 
+import type { Link } from "~~/drizzle/schema";
+
 type CreateLinkBody = {
   url: string;
 };
 
 type CreateLinkResponse = {
-  shortID: string;
+  newLink: Link;
 };
 
 export default defineEventHandler<
@@ -18,14 +20,19 @@ export default defineEventHandler<
   const { user } = await getUserSession(event);
 
   try {
-    await db.insert(schema.links).values({
-      url,
-      code: shortID,
-      userId: user?.id || 1,
-      title,
-      description,
-      image,
-    });
+    const [newLink] = await db
+      .insert(schema.links)
+      .values({
+        url,
+        code: shortID,
+        userId: user?.id || 1,
+        title,
+        description,
+        image,
+      })
+      .returning();
+
+    return { newLink };
   } catch (e) {
     console.error(e);
     throw createError({
@@ -33,6 +40,4 @@ export default defineEventHandler<
       message: "Failed to create link",
     });
   }
-
-  return { shortID };
 });

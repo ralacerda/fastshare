@@ -1,12 +1,17 @@
 <script setup lang="ts">
-const { user } = useUserSession();
+import type { Link } from "~~/drizzle/schema";
 
-const { data, status } = useFetch("/api/getRecentLinks", {
-  query: { user: user.value?.id },
-  watch: [user],
-});
+defineProps<{ links: Link[] }>();
 </script>
 
 <template>
-  <pre>{{ data }}</pre>
+  <div>
+    <h2>Recent links</h2>
+    <ul>
+      <li v-for="link in links" :key="link.id">
+        <a :href="link.url">{{ link.url }}</a>
+        {{ link.createAt }}
+      </li>
+    </ul>
+  </div>
 </template>
