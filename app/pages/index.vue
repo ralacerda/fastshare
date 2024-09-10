@@ -84,6 +84,7 @@ async function submit() {
           <NuxtLink :to="shortenLink">{{ shortenLink }}</NuxtLink>
           <button class="button" @click="copy(shortenLink)">Copy</button>
         </div>
+        <RecentLinks />
       </div>
     </div>
     <footer>
