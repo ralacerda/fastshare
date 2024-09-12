@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     },
     tursoUrl: "",
     tursoToken: "",
+    devDatabase: "true",
     oauth: {
       google: {
         clientId: "",
@@ -34,5 +35,5 @@ export default defineNuxtConfig({
     "@db": "./db",
   },
 
-  modules: ["nuxt-auth-utils"],
+  modules: ["nuxt-auth-utils", "nuxt-time"],
 });

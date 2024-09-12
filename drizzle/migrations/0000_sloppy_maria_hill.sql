@@ -2,7 +2,7 @@ CREATE TABLE `link` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`url` text NOT NULL,
 	`code` text NOT NULL,
-	`created_at` text DEFAULT CURRENT_TIMESTAMP,
+	`created_at` integer DEFAULT (unixepoch()),
 	`image` text,
 	`title` text,
 	`description` text,
@@ -15,7 +15,7 @@ CREATE TABLE `users` (
 	`sub` text NOT NULL,
 	`full_name` text NOT NULL,
 	`email` text NOT NULL,
-	`created_at` text DEFAULT CURRENT_TIMESTAMP
+	`created_at` integer DEFAULT (unixepoch())
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `link_code_unique` ON `link` (`code`);--> statement-breakpoint

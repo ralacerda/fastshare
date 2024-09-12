@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "1cc759d6-be4a-441f-85e6-d470ca9d6820",
+  "id": "f82a3d49-983e-4c02-a3e0-634fb3fbaaea",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "link": {
@@ -30,11 +30,11 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "default": "(unixepoch())"
         },
         "image": {
           "name": "image",
@@ -132,11 +132,11 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "default": "(unixepoch())"
         }
       },
       "indexes": {

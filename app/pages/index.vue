@@ -3,7 +3,9 @@ import * as v from "valibot";
 import { useClipboard } from "@vueuse/core";
 
 const runtimeConfig = useRuntimeConfig();
-const { createLink, error, links } = useLinks();
+const { createLink, error, links, fetchLinks } = useLinks();
+
+await fetchLinks();
 
 const UrlSchema = v.pipe(v.string(), v.url());
 

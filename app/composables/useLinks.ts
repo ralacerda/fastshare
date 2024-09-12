@@ -14,14 +14,16 @@ export default function useLinks() {
     pending.value = true;
 
     try {
-      const data = await $fetch("/api/getRecentLinks", {
+      const { data } = await useFetch("/api/getRecentLinks", {
         query: {
           user: user.value.id,
         },
       });
 
+      console.log(data.value!.links);
+
       pending.value = false;
-      links.value = data.links.map(normalizePayload);
+      links.value = data.value!.links.map(normalizePayload);
     } catch (e) {
       pending.value = false;
       if (!(e instanceof Error)) throw e;
@@ -45,13 +47,12 @@ export default function useLinks() {
     }
   }
 
-  fetchLinks();
-
   return {
     links,
     pending,
     error,
     createLink,
+    fetchLinks,
   };
 }
 
@@ -60,7 +61,7 @@ function normalizePayload(payload: SerializeObject<Link>): Link {
     id: payload.id,
     url: payload.url,
     code: payload.code,
-    createAt: payload.createAt,
+    createAt: payload.createAt ? new Date(payload.createAt) : null,
     image: payload.image,
     title: payload.title,
     description: payload.description,

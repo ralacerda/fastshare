@@ -29,8 +29,6 @@ export default defineEventHandler(async (event) => {
     .where(eq(schema.links.userId, params.user))
     .limit(10);
 
-  links.forEach(console.log);
-
   return {
     links,
   };

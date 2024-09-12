@@ -8,7 +8,9 @@ export const users = sqliteTable(
     sub: text("sub").notNull().unique(),
     fullName: text("full_name").notNull(),
     email: text("email").notNull().unique().notNull(),
-    createAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+    createAt: integer("created_at", { mode: "timestamp" }).default(
+      sql`(unixepoch())`
+    ),
   },
   (t) => ({
     subIdx: index("sub_idx").on(t.sub),
@@ -21,7 +23,9 @@ export const links = sqliteTable(
     id: integer("id").primaryKey(),
     url: text("url").notNull(),
     code: text("code").notNull().unique(),
-    createAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+    createAt: integer("created_at", { mode: "timestamp" }).default(
+      sql`(unixepoch())`
+    ),
     image: text("image"),
     title: text("title"),
     description: text("description"),
