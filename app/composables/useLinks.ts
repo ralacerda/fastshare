@@ -8,6 +8,12 @@ export default function useLinks() {
 
   const { user } = useUserSession();
 
+  watch(user, (newUser) => {
+    if (newUser === null) {
+      links.value = [];
+    }
+  });
+
   async function fetchLinks() {
     if (!user.value) return;
 
@@ -19,8 +25,6 @@ export default function useLinks() {
           user: user.value.id,
         },
       });
-
-      console.log(data.value!.links);
 
       pending.value = false;
       links.value = data.value!.links.map(normalizePayload);
@@ -45,6 +49,8 @@ export default function useLinks() {
     if (newLink) {
       links.value = [normalizePayload(newLink), ...(links.value || [])];
     }
+
+    return newLink.code;
   }
 
   return {

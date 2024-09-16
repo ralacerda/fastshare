@@ -35,7 +35,10 @@ async function submit() {
   if (!validateUrl()) return;
 
   loading.value = true;
-  await createLink(url.value);
+  const code = await createLink(url.value);
+  if (code) {
+    shortenID.value = code;
+  }
   loading.value = false;
 }
 </script>
