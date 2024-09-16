@@ -6,7 +6,7 @@ const { tursoToken, tursoUrl, devDatabase } = useRuntimeConfig();
 
 function createClient() {
   if (devDatabase === "true") {
-    return _createClient({ url: "file:db/db" });
+    return _createClient({ url: "file:database/db.sqlite" });
   }
   return _createClient({ url: tursoUrl, authToken: tursoToken });
 }
