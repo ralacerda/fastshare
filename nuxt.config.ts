@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     },
     tursoUrl: "",
     tursoToken: "",
-    devDatabase: "true",
+    devDatabase: "",
     oauth: {
       google: {
         clientId: "",
