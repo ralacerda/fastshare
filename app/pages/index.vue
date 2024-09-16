@@ -2,7 +2,6 @@
 import * as v from "valibot";
 import { useClipboard } from "@vueuse/core";
 
-const runtimeConfig = useRuntimeConfig();
 const { createLink, error, links, fetchLinks } = useLinks();
 
 await fetchLinks();
@@ -15,9 +14,7 @@ const validUrl = ref(true);
 const shortenID = ref("");
 
 const shortenLink = computed(() => {
-  return shortenID.value
-    ? runtimeConfig.public.hostURL + "/" + shortenID.value
-    : "";
+  return shortenID.value ? composeLink(shortenID.value) : "";
 });
 
 const loading = ref(false);
@@ -75,7 +72,7 @@ async function submit() {
           <NuxtLink :to="shortenLink">{{ shortenLink }}</NuxtLink>
           <button class="button" @click="copy(shortenLink)">Copy</button>
         </div>
-        <RecentLinks :links />
+        <RecentLinks v-if="links.length > 0" :links class="recent-links" />
       </div>
     </div>
     <footer>
@@ -145,6 +142,10 @@ small {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+.recent-links {
+  margin-top: 4rem;
 }
 
 footer {
