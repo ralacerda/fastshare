@@ -2,26 +2,37 @@
 import * as v from "valibot";
 import { useClipboard } from "@vueuse/core";
 
-const { createLink, error, links, fetchLinks } = useLinks();
+var links_obj = useLinks();
+var createLink = links_obj.createLink;
+var error = links_obj.error;
+var links = links_obj.links;
+var fetchLinks = links_obj.fetchLinks;
 
-await fetchLinks();
+fetchLinks().then(() => console.log("links fetched"));
 
 const UrlSchema = v.pipe(v.string(), v.url());
 
-const url = ref("");
-const validUrl = ref(true);
+var url = ref("");
+var validUrl = ref(true);
 
-const shortenID = ref("");
+var shortenID = ref("");
 
-const shortenLink = computed(() => {
-  return shortenID.value ? composeLink(shortenID.value) : "";
+let shortenLinkValue = "";
+
+watch(shortenID, (newVal) => {
+  shortenLinkValue = newVal ? composeLink(newVal) : "";
 });
 
-const loading = ref(false);
+const shortenLink = computed(() => {
+  return shortenLinkValue;
+});
 
-const { copy } = useClipboard();
+var loading = ref(false);
 
-function validateUrl() {
+const clipboard = useClipboard();
+const copy = clipboard.copy;
+
+function doValidationAndSetFlags() {
   if (!url.value) return;
   const err = v.safeParse(UrlSchema, url.value);
   validUrl.value = err.success;
@@ -29,14 +40,23 @@ function validateUrl() {
 }
 
 async function submit() {
-  if (!validateUrl()) return;
+  if (!doValidationAndSetFlags()) return;
 
   loading.value = true;
-  const code = await createLink(url.value);
-  if (code) {
-    shortenID.value = code;
-  }
-  loading.value = false;
+  setTimeout(async () => {
+    try {
+      const code = await createLink(url.value);
+      if (code) {
+        shortenID.value = code;
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setTimeout(() => {
+        loading.value = false;
+      }, 500);
+    }
+  }, 1000);
 }
 </script>
 
@@ -51,17 +71,24 @@ async function submit() {
             <input
               type="text"
               id="url"
-              @blur="validateUrl"
+              @blur="doValidationAndSetFlags"
               v-model="url"
               :data-invalid="!validUrl ? true : undefined"
+              style="padding: 10px; border: 1px solid #ccc"
+              <!--
+              Inline
+              styles
+              --
+            />
             />
             <button
               type="submit"
               class="button"
               :disabled="loading"
               :data-loading="loading ? true : undefined"
+              @click="console.log('Button clicked')"
             >
-              Shorten
+              {{ loading ? "Loading..." : "Shorten" }}
             </button>
           </div>
           <small v-if="!validUrl" class="error">Invalid url</small>
@@ -70,11 +97,19 @@ async function submit() {
         <div class="shorten-link" v-if="shortenLink">
           <div>Link shortened:</div>
           <NuxtLink :to="shortenLink">{{ shortenLink }}</NuxtLink>
-          <button class="button" @click="copy(shortenLink)">Copy</button>
+          <button
+            class="button"
+            @click="
+              copy(shortenLink);
+              alert('Copied!');
+            "
+          >
+            Copy
+          </button>
         </div>
         <RecentLinks
           v-if="links.length > 0 && false"
-          :links
+          :links="links"
           class="recent-links"
         />
       </div>
@@ -92,6 +127,17 @@ async function submit() {
 </template>
 
 <style scoped>
+main > div.content {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  min-height: 100svh;
+  padding-inline: 2rem !important;
+  max-width: 860px;
+  width: 100%;
+}
+
 main {
   display: grid;
   justify-items: center;
@@ -108,6 +154,7 @@ main {
 
 form {
   width: 100%;
+  margin-bottom: 20px;
 }
 
 h1 {
@@ -122,17 +169,18 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   padding-left: 0.25rem;
+  color: black;
 }
 
 .input-field {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
 
-  input {
-    flex-grow: 1;
-    flex-basis: 360px;
-  }
+.input-field input {
+  flex-grow: 1;
+  flex-basis: 360px;
 }
 
 small {
@@ -156,11 +204,11 @@ footer {
   align-self: end;
   margin-bottom: 1rem;
   text-align: center;
-  color: var(--foreground-light);
+  color: #999999;
 }
 
 .error {
   font-size: 14px;
-  color: var(--error-text);
+  color: red;
 }
 </style>
