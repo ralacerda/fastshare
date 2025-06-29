@@ -1,5 +1,4 @@
 import * as v from "valibot";
-import { eq } from "drizzle-orm";
 
 const ParamSchema = v.object({
   shortID: v.string(),
@@ -10,11 +9,12 @@ export default defineEventHandler(async (event) => {
     v.parse(ParamSchema, query)
   );
 
-  const [link] = await db
-    .select()
-    .from(schema.links)
-    .where(eq(schema.links.code, params.shortID));
-
+  const link = await db.query.links.findFirst({
+    where: (links, { eq }) => eq(links.code, params.shortID),
+    columns: {
+      url: true,
+    },
+  });
   if (!link) {
     throw createError({
       statusCode: 404,

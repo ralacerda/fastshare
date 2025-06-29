@@ -11,9 +11,7 @@ export default defineNuxtConfig({
     public: {
       hostURL: "http://localhost:3000",
     },
-    tursoUrl: "",
-    tursoToken: "",
-    devDatabase: "",
+    devDatabase: "file:database/db.sqlite",
     oauth: {
       google: {
         clientId: "",

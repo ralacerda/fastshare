@@ -22,12 +22,11 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const links = await db
-    .select()
-    .from(schema.links)
-    .orderBy(desc(schema.links.createAt))
-    .where(eq(schema.links.userId, params.user))
-    .limit(10);
+  const links = await db.query.links.findMany({
+    where: (links, { eq }) => eq(links.userId, params.user),
+    orderBy: (links, { desc }) => desc(links.createAt),
+    limit: 10,
+  });
 
   return {
     links,

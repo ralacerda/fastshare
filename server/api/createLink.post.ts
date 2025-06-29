@@ -25,7 +25,7 @@ export default defineEventHandler<
       .values({
         url,
         code: shortID,
-        userId: user?.id || 1,
+        userId: user?.id,
         title,
         description,
         image,
