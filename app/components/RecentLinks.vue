@@ -2,6 +2,8 @@
 import type { Link } from "~~/drizzle/schema";
 
 defineProps<{ links: Link[] }>();
+
+const url = useRuntimeConfig().public.hostURL;
 </script>
 
 <template>
@@ -10,7 +12,9 @@ defineProps<{ links: Link[] }>();
     <ul>
       <li v-for="link in links" :key="link.id">
         <div class="code-link">
-          <NuxtLink :href="link.code">{{ composeLink(link.code) }}</NuxtLink>
+          <NuxtLink :href="link.code">{{
+            composeLink(url, link.code)
+          }}</NuxtLink>
         </div>
         ·
         <h3 class="link-title">{{ link.title }}</h3>

@@ -12,9 +12,10 @@ const url = ref("");
 const validUrl = ref(true);
 
 const shortenID = ref("");
+const baseURL = useRuntimeConfig().public.hostURL;
 
 const shortenLink = computed(() => {
-  return shortenID.value ? composeLink(shortenID.value) : "";
+  return shortenID.value ? composeLink(baseURL, shortenID.value) : "";
 });
 
 const loading = ref(false);

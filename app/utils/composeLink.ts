@@ -1,5 +1,3 @@
-export default function composeLink(code: string) {
-  const runtimeConfig = useRuntimeConfig();
-
-  return runtimeConfig.public.hostURL + "/" + code;
+export default function composeLink(url: string, code: string) {
+  return url + "/" + code;
 }
