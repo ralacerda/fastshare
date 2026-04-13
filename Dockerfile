@@ -1,4 +1,4 @@
-ARG NODE_VERSION=22.6.0
+ARG NODE_VERSION=24.14.1
 
 # Create build stage
 FROM node:${NODE_VERSION}-slim AS build
@@ -31,8 +31,15 @@ FROM node:${NODE_VERSION}-slim
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install minimal dependencies required for runtime migrations
+RUN npm install -g drizzle-kit@0.31.4 drizzle-orm@0.44.2 @libsql/client@0.15.9
+
 # Copy the output from the build stage to the working directory
 COPY --from=build /app/.output ./
+
+# Copy Drizzle migration setup for runtime migrations
+COPY --from=build /app/drizzle.config.ts /app/
+COPY --from=build /app/drizzle /app/drizzle
 
 # Define environment variables
 ENV HOST=0.0.0.0
@@ -41,5 +48,5 @@ ENV NODE_ENV=production
 # Expose the port the application will run on
 EXPOSE 3000
 
-# Start the application
-CMD ["node","/app/server/index.mjs"]
+# Run migrations on startup, then start the application
+CMD ["sh","-c","drizzle-kit migrate --config=drizzle.config.ts && node /app/server/index.mjs"]
