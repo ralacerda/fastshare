@@ -1,0 +1,34 @@
+# VCS
+.git
+.gitignore
+
+# Dependencies and package manager caches
+node_modules
+.pnpm-store
+
+# Nuxt build artifacts
+.nuxt
+.output
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# Local database files
+/database
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE / OS files
+.vscode
+.idea
+.DS_Store
