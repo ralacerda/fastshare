@@ -33,3 +33,7 @@ jobs:
         with:
           push: true
           tags: ghcr.io/ralacerda/fast-share:latest
+      - name: Trigger coolify deploy
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+
