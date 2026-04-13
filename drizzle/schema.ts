@@ -10,7 +10,7 @@ export const users = sqliteTable(
     email: text().notNull().unique().notNull(),
     createAt: integer({ mode: "timestamp" }).default(sql`(unixepoch())`),
   },
-  (t) => [index("sub_idx").on(t.sub)]
+  (t) => [index("sub_idx").on(t.sub)],
 );
 
 export const links = sqliteTable(
@@ -25,7 +25,7 @@ export const links = sqliteTable(
     description: text(),
     userId: integer().references(() => users.id),
   },
-  (t) => [index("code_idx").on(t.code)]
+  (t) => [index("code_idx").on(t.code)],
 );
 
 export type Link = typeof links.$inferSelect;
